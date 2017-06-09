@@ -19,7 +19,7 @@ class BaseModel(Model):
 class User(UserMixin,BaseModel):
     id = IntegerField(primary_key=True)
     account = CharField(max_length=20)
-    pwd= CharField(max_length=200)
+    pwd = CharField(max_length=200)
     created_time = DateField()
 
     @staticmethod

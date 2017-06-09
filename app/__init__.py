@@ -1,18 +1,15 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from models import initDb, User
-from main.quartzJob import Quartz
 
 bootstrap = Bootstrap()
 db = initDb()
-quartz = Quartz()
+# quartz = Quartz()
 
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'hard to guessing'
     bootstrap.init_app(app)
-    sched = quartz.addJobDynamic()
-    # sched.start()
     # register routes
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

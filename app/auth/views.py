@@ -5,6 +5,7 @@ from flask import render_template, redirect, request, url_for, flash, session
 from . import auth
 from ..models import User
 import json,ConfigParser
+from userService import getUserTable
 
 
 
@@ -33,3 +34,15 @@ def logout():
     session.clear()
     flash('You have been logged out.')
     return redirect(url_for('login'))
+
+@auth.route('/userManager')
+def userManager():
+    return render_template('auth/userManager.html')
+
+@auth.route('/userTable')
+def userTable():
+    users = getUserTable()
+    # TODO users无法转化为json
+    return json.dumps(users)
+
+
