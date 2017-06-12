@@ -4,12 +4,21 @@
 from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from peewee import *
+import importlib
+from decoratorUtil import catchDbException
 
 db = SqliteDatabase('./test3.db')
 
 def initDb():
     db.create_tables([User], safe=True)
     db.close()
+
+# 根据model类名 获取类class
+@catchDbException
+def getModelClsByName(cls_name):
+    mode = importlib.import_module('.models', 'app')
+    cls = getattr(mode, cls_name)
+    return cls
 
 class BaseModel(Model):
     class Meta:
@@ -37,3 +46,5 @@ class User(UserMixin,BaseModel):
         # new_pwd_hash = generate_password_hash(new_pwd)
         User.update(pwd=new_pwd).where(User.id == account['id']).execute()
 
+if __name__ == '__main__':
+    user = getModelClsByName('213')

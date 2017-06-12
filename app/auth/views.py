@@ -5,7 +5,9 @@ from flask import render_template, redirect, request, url_for, flash, session
 from . import auth
 from ..models import User
 import json,ConfigParser
-from userService import getUserTable
+from userService import getUserTable, queryTotalUserTableInDb, getTablePageByCls
+from ..commonUtil import convertObjToDict, buildDataTableResponse
+import sys, importlib
 
 
 
@@ -39,10 +41,14 @@ def logout():
 def userManager():
     return render_template('auth/userManager.html')
 
-@auth.route('/userTable')
+@auth.route('/userTable', methods=['GET', 'POST'])
 def userTable():
-    users = getUserTable()
-    # TODO users无法转化为json
-    return json.dumps(users)
+    post_data = request.json
+    users = getUserTable(post_data['offset'], post_data['pageSize'])
+    # users_dict = convertObjToDict(users, User)
+    # users_total = queryTotalUserTableInDb()
+    res = getTablePageByCls("User", post_data['offset'],post_data['pageSize'])
+    response = buildDataTableResponse(post_data['draw'], res['data'], res['count'], res['count'])
+    # response = buildDataTableResponse(post_data['draw'], users_dict, users_total, users_total)
 
-
+    return json.dumps(response)
