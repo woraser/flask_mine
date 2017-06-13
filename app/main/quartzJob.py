@@ -37,9 +37,12 @@ class Quartz(object):
         pass
 
 
+    def acoustic_sensor_job(self):
+        print "声波传感器"
+        pass
+
+
     def getTestSensorData(self):
-
-
 
         pass
 #

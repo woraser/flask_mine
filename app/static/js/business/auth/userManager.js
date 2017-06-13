@@ -20,7 +20,7 @@ var userMangerController = {
             bInfo : true,
             destroy:true,
             ajax: {
-                url:"/auth/userTable",
+                url:"/common/dataTable/User",
                 type:"POST",
                 contentType : "application/json",
                 data: function ( d ) {

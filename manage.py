@@ -35,7 +35,7 @@ manager = Manager(app)
 
 
 
-# start the app when execute command:python manage.py
+# start the app when execute command:python manage.py runserver
 if __name__ == '__main__':
     # manager.run()
       app.run(debug=True)

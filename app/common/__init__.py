@@ -1,3 +1,4 @@
 from flask import Blueprint
-api = Blueprint('api', __name__)
+common = Blueprint('common', __name__)
+
 from . import routes
