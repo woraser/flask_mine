@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>IOX-T</title>
+    <title>StudentManager</title>
     {{ super() }}
        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
        <link href="../static/css/metisMenu.min.css" rel="stylesheet">
@@ -61,15 +61,16 @@
                $.ajax({
                       type: 'POST',
                       url: '/auth/login',
-{#                      contentType:'application/json',#}
-                      data: data,
+                      contentType:'application/json',
+                      data: JSON.stringify(data),
                       dataType: 'json',
                       success: function(result){
+                          debugger;
                          if(result.status ==0){
                           alert("请输入正确的账号和密码");
-                      }else{
-                          window.location.href = result.data;
-                      }
+                          }else{
+                              window.location.href = result.data;
+                          }
                       }
                     });
            });

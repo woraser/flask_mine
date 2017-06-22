@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "baseIndex.html" %}
 {% block title %}用户管理{% endblock %}
 
 {% block page_content %}
@@ -13,7 +13,7 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="../../static/js/jquery.dataTables.min.js"></script>
-    <script src="../../static/js/dataTables.bootstrap.js"></script>
+    <script src="../../static/js/plugin/jquery.dataTables.min.js"></script>
+    <script src="../../static/js/plugin/dataTables.bootstrap.js"></script>
     <script src="../../static/js/business/auth/userManager.js"></script>
 {% endblock %}

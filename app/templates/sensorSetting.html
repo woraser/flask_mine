@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "baseIndex.html" %}
 
 {% block title %}cronSetting{% endblock %}
 {% block head %}
     {{ super() }}
-       <link href="../static/css/dataTables.bootstrap.min.css" rel="stylesheet">
+       <link href="../static/css/plugin/dataTables.bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 {% block page_content %}
 <div class="content-body" style="padding-top: 5px;">
@@ -12,9 +12,9 @@
 </div>
 {% block scripts %}
       {{ super() }}
-      <script src="../static/js/jquery.dataTables.min.js"></script>
-      <script src="../static/js/dataTables.bootstrap.js"></script>
-    <script src="../static/js/bootbox.js"></script>
+      <script src="../static/js/plugin/jquery.dataTables.min.js"></script>
+      <script src="../static/js/plugin/dataTables.bootstrap.js"></script>
+    <script src="../static/js/plugin/bootbox.js"></script>
       <script type="text/javascript">
       $(document).ready(function() {
         $('#sensorDiv').dataTable({

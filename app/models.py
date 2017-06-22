@@ -4,8 +4,7 @@
 from flask_login import UserMixin, AnonymousUserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from peewee import *
-import importlib
-from decoratorUtil import catchDbException
+from app import login_manager
 
 db = SqliteDatabase('./test3.db')
 
@@ -13,38 +12,19 @@ def initDb():
     db.create_tables([User], safe=True)
     db.close()
 
-# 根据model类名 获取类class
-@catchDbException
-def getModelClsByName(cls_name):
-    mode = importlib.import_module('.models', 'app')
-    cls = getattr(mode, cls_name)
-    return cls
-
 class BaseModel(Model):
     class Meta:
         database = db
 
 # 用户信息
-class User(UserMixin,BaseModel):
+class User(UserMixin, BaseModel):
     id = IntegerField(primary_key=True)
     account = CharField(max_length=20)
     pwd = CharField(max_length=200)
     created_time = DateField()
 
-    @staticmethod
-    def getUserByAccountAndPwd(account, pwd):
-        user_instance = User()
-        # pwd_hash = generate_password_hash(pwd)
-        try:
-            user = user_instance.get(User.account == account and  User.pwd == pwd)
-        except Exception:
-            user = None
-        return user
 
-    def updatePwd(self, account, new_pwd):
-        user_instance = User()
-        # new_pwd_hash = generate_password_hash(new_pwd)
-        User.update(pwd=new_pwd).where(User.id == account['id']).execute()
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(id=user_id)
 
-if __name__ == '__main__':
-    user = getModelClsByName('213')

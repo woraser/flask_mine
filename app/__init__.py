@@ -1,15 +1,28 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author:Charles.chen
+# createDate:2017/6/21
+# Title:
+# Tip:
+from flask_login import LoginManager
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from models import initDb, User
+
 
 bootstrap = Bootstrap()
-db = initDb()
-# quartz = Quartz()
+login_manager = LoginManager()
+login_manager.session_protection = 'hehenopwd'
+login_manager.login_view = 'auth.login'
+login_manager.login_message = "请登录！"
 
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'hard to guessing13459'
+    # session.permanent = True
     bootstrap.init_app(app)
+    login_manager.init_app(app)
+    from models import initDb
+    db = initDb()
     # register routes
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

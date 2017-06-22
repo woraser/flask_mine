@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import importlib, json
+from decoratorUtil import catchDbException
+from collections import Iterable
 
 # 将peewee查询对象转化为dict
-def convertObjToDict(objs,cls):
+def convertDbObjToDict(objs, cls):
     dict_array = []
     fields = getFieldsFromModelCls(cls)
+    if not isinstance(objs, Iterable):
+        dict_item = {}
+        for i in fields:
+            if getattr(objs, i) is not None:
+                dict_item.setdefault(i, getattr(objs, i))
+            pass
+        return dict_item
     for obj in objs:
         dict_item = {}
         for i in fields:
@@ -34,3 +44,36 @@ def buildDataTableResponse(draw, data, recordsTotal, recordsFiltered):
     }
     return response
     pass
+
+# 根据model类的名称获得cls
+@catchDbException
+def getModelClsByName(cls_name):
+    mode = importlib.import_module('.models', 'app')
+    cls = getattr(mode, cls_name)
+    return cls
+
+
+def buildSucc(data):
+    res = {
+        "status": 1,
+        "data": data
+    }
+    return json.dumps(res)
+    pass
+
+def buildErr(msg):
+    res = {
+        "status": 0,
+        "data": msg
+    }
+    return json.dumps(res)
+    pass
+
+def buildNone():
+    res = {
+        "status": 2,
+        "data": None
+    }
+    return json.dumps(res)
+    pass
+
