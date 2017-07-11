@@ -19,6 +19,7 @@ def default():
     return redirect(url_for("main.index"))
 
 @main.route('/base')
+@login_required
 def baseView():
     return render_template('common/base.html')
 
