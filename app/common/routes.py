@@ -14,3 +14,10 @@ def getTablePage(table_name):
     response = buildDataTableResponse(post_data['draw'], res['data'], res['count'], res['count'])
     return json.dumps(response)
     pass
+
+
+def returnMulti():
+    def getM():
+
+        pass
+    return getM,a,

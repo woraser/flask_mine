@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>StudentManager</title>
+    <title>Truth or Dare</title>
     {{ super() }}
        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
        <link href="../static/css/metisMenu.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title">让我猜猜你是谁:)</h3>
                     </div>
                     <div class="panel-body">
                         <form role="form">
@@ -29,12 +29,6 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" id="password" name="password" type="password" value="">
                                 </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
                                 <a href="#" class="btn btn-lg btn-success btn-block" id="login_btn">Login</a>
                             </fieldset>
                         </form>
@@ -45,13 +39,14 @@
     </div>
 {% block scripts %}
         {{ super() }}
+     <script src="../../static/js/plugin/bootbox.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
            $("#login_btn").click(function(){
                var account = $("#accunt").val();
                var password = $("#password").val();
                if(!account || !password){
-                   alert("请先输入账号和密码!");
+                   bootbox.alert("先让我猜一下你是谁吧:)");
                    return;
                }
                var  data = {
@@ -65,9 +60,8 @@
                       data: JSON.stringify(data),
                       dataType: 'json',
                       success: function(result){
-                          debugger;
                          if(result.status ==0){
-                          alert("请输入正确的账号和密码");
+                             bootbox.alert("我真的猜不透你::>_<::")
                           }else{
                               window.location.href = result.data;
                           }

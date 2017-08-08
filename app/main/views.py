@@ -3,11 +3,10 @@
 from flask import render_template, json, session, redirect, url_for, request
 from flask_login import login_required, current_user
 from . import main
-import psutil
+from mainService import markedTopicSign
+import app.commonUtil as Util
 
-@main.after_app_request
-def after_request(response):
-    return response
+
 
 @main.route('/', methods=['GET', 'POST'])
 @login_required
@@ -23,11 +22,14 @@ def default():
 def baseView():
     return render_template('common/base.html')
 
+# 标记该主题已被使用
+@main.route("/topicMark/<string:id>", methods=['GET'])
+def markedTopic(id):
+    res = markedTopicSign(id)
+    if res is not None:
+        return Util.buildSucc("ok")
+    else:
+        return Util.buildErr("操作失败，请联系管理员！")
+    pass
 
-@main.route('/systemInfo', methods=['GET'])
-def getSystemInfo():
-    response = {
-        "cpu_usage": psutil.cpu_percent(0),
-        "ram_usage": psutil.virtual_memory().percent
-    }
-    return json.dumps(response)
+

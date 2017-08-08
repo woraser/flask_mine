@@ -5,7 +5,6 @@ from flask import render_template, redirect, request, url_for, flash, session
 from flask_login import login_user, logout_user, login_required, current_user
 import authService
 from . import auth
-from ..models import User
 from app.commonUtil import buildErr,buildSucc,buildNone
 import json
 

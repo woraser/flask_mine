@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import os
 # from app.models import User
 COV = None
@@ -16,27 +17,21 @@ if os.path.exists('.env'):
 
 
 from app import create_app
-# from app.models import User, Follow, Role, Permission, Post, Comment
 from flask_script import Manager, Shell
-# from flask_migrate import Migrate, MigrateCommand
 
-# app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 app = create_app()
 manager = Manager(app)
-# migrate = Migrate(app, db)
-
-# def make_shell_context():
-#     print 123
-#     return dict(app=app, db=db, User=User)
-#
-# manager.add_command("shell", Shell(make_context=make_shell_context))
-# manager.add_command('db', MigrateCommand)
-
 
 
 
 # start the app when execute command:python manage.py runserver
 if __name__ == '__main__':
-    # manager.run()
-      app.run(debug=True)
+    manager.run()
+    # 避免debug模式下二次初始化数据 但是文件更新之后不会在刷新文件
+    # app.run(port=5000, debug=True, use_reloader=False)
+    #     等同于 判断WERKZEUG_RUN_MAIN 变量 再决定是否运行app
+    #     if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+    #         pass
+    #     app.run(port=5000, debug=True)
+
 
